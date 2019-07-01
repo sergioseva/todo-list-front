@@ -1,0 +1,56 @@
+<h3>TODO <small>{{ todo.descripcion }}</small></h3>
+<button [routerLink]="['/todos']" class="btn btn-outline-danger">
+  <i class="fa fa-arrow-left"></i>
+  Regresar
+</button>
+
+
+<hr>
+
+<div class="row animated fadeIn fast">
+    <div class="col-md-12">
+
+        <form (ngSubmit)="guardar( f )" #f="ngForm">
+
+            <div class="form-group">
+                <!-- <label>Nombre</label> -->
+                <textarea placeholder="Descripcion" class="form-control" [(ngModel)]="todo.descripcion" name="descripcion" id="" cols="50" rows="4" maxlength="250" required>
+              </textarea>
+            </div>
+
+            <!--             <div class="form-group">
+                <label>Estado</label>
+                <select [(ngModel)]="todo.status" name="status" class="form-control" required>
+                  <option value="Pendiente">Pendiente</option>
+                  <option value="Completado">Completado</option>
+                </select>
+            </div> -->
+
+            <button *ngIf="!estaPendiente()" (click)="setPendiente()" class="btn btn-outline-success w-50" type="button">
+      <i class="fa fa-smile-wink"></i>
+      Completado
+    </button>
+
+            <button *ngIf="estaPendiente()" (click)="setCompletado()" class="btn btn-outline-danger w-50" type="button">
+        <i class="fa fa-dizzy"></i>
+        Pendiente
+    </button>
+
+            <!--             <div class="form-group">
+                <label>Imagen</label>
+                <input [(ngModel)]="todo.image" type="text" name="imagen">
+            </div> -->
+            <app-carga [imgURL]="updateImg" (archivoSeleccionado)="guardarArchivo($event)"></app-carga>
+
+
+            <div class="form-group">
+                <button [disabled]="!f.valid" type="submit" class="btn btn-outline-primary">
+                  <i class="fa fa-save">Guardar carmbios</i>
+                </button>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<h1>TODO list</h1>
+<hr>
+
+
+<div class="row">
+    <div class="col-md-12 text-left">
+        <button [routerLink]="['/todo','nuevo']" class="btn btn-outline-primary" type="button" name="button">
+            <i class="fa fa-plus"></i>
+            Agregar
+    </button>
+    </div>
+</div>
+<br>
+
+
+<div class="row animated fadeIn fast">
+    <div class="col-md-12">
+
+        <div class="table-responsive">
+
+            <table *ngIf="!cargando && !error && todoList.length > 0" class="table mt-3 animated fadeIn faster animated fadeIn faster">
+                <thead class="thead-dark">
+                    <tr>
+                        <th width="5%">#</th>
+                        <th width="50%">Descripcion</th>
+                        <th width="10%">Estado</th>
+                        <th></th>
+                        <th class="text-right">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr [ngClass]="{'table-success': todo.status=='Completado' , 'table-danger': todo.status=='Pendiente' }" *ngFor="let todo of todoList ; let i = index">
+                        <td>{{ i+1}}</td>
+                        <td style="max-width:150px;">{{ todo.descripcion }}</td>
+                        <img [src]="todo | todoImage" height="200 " width="200">
+                        <td>
+                            <button title="Click para marcar como pendiente" *ngIf="todo.status=='Completado'" (click)="setPendiente(todo)" class="btnCompleted btn btn-outline-success w-30" type="button">
+                                <i class="fa fa-smile-wink"></i>Completado
+                              </button>
+                            <button title="Click para marcar como completado" *ngIf="todo.status=='Pendiente'" (click)="setCompletado(todo)" class="btnPending btn btn-outline-danger w-30" type="button">
+                                  <i class="fa fa-dizzy"></i>Pendiente
+
+                              </button>
+                        </td>
+                        <td class="text-right w120 ">
+                            <button [routerLink]="[ '/todo', todo.id] " type="button " class="btn btn-outline-success ">
+                                <i class="fa fa-pencil "></i>
+              </button>
+                            <button (click)="borraTodo(todo,i) " type="button " class="btn btn-outline-danger ">
+                                    <i class="fa fa-trash "></i>
+              </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div *ngIf="!cargando && !error && todoList.length===0 " class="alert alert-warning text-center mt-3 animated fadeIn faster ">
+                <h4 class="alert-heading ">No hay registros</h4>
+                <p>
+                    <i class="fa fa-exclamation fa-2x "></i>
+                </p>
+            </div>
+
+            <div *ngIf="cargando " class="alert alert-info text-center mt-3 animated fadeIn faster ">
+                <h4 class="alert-heading ">Cargando</h4>
+                <p>
+                    <i class="fa fa-sync-alt fa-spin fa-2x "></i>
+                </p>
+                <p class="mb-0 ">
+                    Espere por favor
+                </p>
+            </div>
+
+            <div *ngIf="error " class="alert alert-danger text-center mt-3 animated fadeIn faster ">
+                <h4 class="alert-heading ">Error general</h4>
+                <p>
+                    <i class="fa fa-sync-alt fa-spin fa-2x "></i>
+                </p>
+                <p class="mb-0 ">
+                    {{errMessage}}
+                </p>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
