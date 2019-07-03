@@ -31,9 +31,8 @@ export class CargaComponent implements OnInit {
 
 
 
-  //nueva prueba
+
   public imagePath;
-  //imgURL: any;
   public message: string;
   @Output() archivoSeleccionado: EventEmitter<FileItem> = new EventEmitter();
   @Input() imgURL: any;
@@ -56,7 +55,6 @@ export class CargaComponent implements OnInit {
     this.archivo=new FileItem(files[0]);
     this.archivoSeleccionado.emit(this.archivo);
     var reader = new FileReader();
-    //this.imagePath = files;
     reader.readAsDataURL(files[0]); 
     reader.onload = (_event) => { 
       this.imgURL = reader.result; 

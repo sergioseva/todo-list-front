@@ -11,7 +11,6 @@ export class TodoImagePipe implements PipeTransform {
     let url = "http://localhost:8080/fileapi/";
 
     if( todo.image ){
-      console.log(todo.descripcion);
       return url + todo.id + "-" + todo.image;
     }else{
          return "assets/img/no-img.png"

@@ -13,9 +13,5 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  
-  buscarTodo(termino:string) {
-    console.log(termino);
-  }
 
 }

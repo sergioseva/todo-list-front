@@ -20,7 +20,6 @@ export class TodoComponent implements OnInit {
 
   todo:Todo= new Todo();
   public archivo:FileItem;
-  nuevo:boolean = false;
   id:string;
   updateImg:any;
 
@@ -48,12 +47,6 @@ export class TodoComponent implements OnInit {
   ngOnInit() {
   }
 
-  guardarArchivo(f:FileItem){
-    console.log("guardar archivo");
-    this.archivo=f;
-    console.log(f);
-    console.log(this.archivo);
-  }
 
   guardar( form: NgForm ){
     console.log(this.todo);
@@ -74,25 +67,23 @@ export class TodoComponent implements OnInit {
     let isInsert:boolean=false;
 
     if ( this.todo.id ) {
-      peticion = this.ts.actualizarTodo( this.todo,this.archivo );
+      peticion = this.ts.updateTodo( this.todo,this.archivo );
     } else {
-      peticion = this.ts.nuevoTodo( this.todo ,this.archivo);
+      peticion = this.ts.insertTodo( this.todo ,this.archivo);
       isInsert=true;
     }
 
     peticion.subscribe( resp => {
-
       Swal.fire({
-        title: this.todo.descripcion,
+        title: "Tarea",
         text: `Se ${ isInsert ? "insertó" : "actualizó"} correctamente`,
         type: 'success'
       });
       this.router.navigate(['/todos']);
-
     },
     errr=> {
       Swal.fire({
-        title: this.todo.descripcion,
+        title: "Tarea",
         text: `Error al ${ isInsert ? "insertar" : "actualizar"}`,
         type: 'error'
       });
@@ -102,7 +93,7 @@ export class TodoComponent implements OnInit {
   }
 
   agregarNuevo( forma:NgForm ){
-    this.router.navigate(['/todo','nuevo']);
+    
     forma.reset({
       estado:"pendiente"
     });
@@ -119,6 +110,13 @@ export class TodoComponent implements OnInit {
 
   estaPendiente(){
       return this.todo.status!="Completado";
+  }
+
+  guardarArchivo(f:FileItem){
+    console.log("guardar archivo");
+    this.archivo=f;
+    console.log(f);
+    console.log(this.archivo);
   }
 
 }

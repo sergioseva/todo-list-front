@@ -14,7 +14,7 @@ export class TodoService {
 
   constructor(private http:HttpClient) { }
 
-  getTodos() {
+  findAll() {
     let url:string=`${ this.URLTodoService }`
 
     return this.http.get(url)
@@ -23,7 +23,16 @@ export class TodoService {
           );
   }
 
-  nuevoTodo( todo:Todo,imagen?:FileItem ){
+  search(descripcion:string,status:string) {
+    let url:string=`${ this.URLTodoService }`
+
+    return this.http.get(this.URLTodoService + `/search?descripcion=${descripcion}&status=${status}`)
+          .pipe(
+            map((todos:any)=>todos)
+          );
+  }
+
+  insertTodo( todo:Todo,imagen?:FileItem ){
 
     let body = JSON.stringify( todo );
     let headers = new HttpHeaders({
@@ -38,20 +47,15 @@ export class TodoService {
 
     return this.http.post(  this.URLTodoService, formdata).pipe(
       map( res=>{
-        console.log("nuevo Todo en service:"+res);
         return res;
       })
     )
  
   }
 
-  actualizarTodo( todo:Todo,imagen?:FileItem ){
+  updateTodo( todo:Todo,imagen?:FileItem ){
 
     let body = JSON.stringify( todo );
-    let headers =new HttpHeaders({
-      'Content-Type':'multipart/form-data'
-    });
-
     let url = `${ this.URLTodoService }/${ todo.id }`;
 
     let formdata: FormData = new FormData();
@@ -61,7 +65,6 @@ export class TodoService {
     }
     return this.http.put(  url , formdata  ).pipe(
           map( res=>{
-            console.log(res);
             return res;
           })
     )
@@ -75,7 +78,7 @@ export class TodoService {
    }
 
   
-  borrarTodo( todo:Todo){
+  deleteTodo( todo:Todo){
 
     let url = `${  this.URLTodoService  }/${ todo.id }`;
     return this.http.delete( url ).pipe(

@@ -1,9 +1,19 @@
 .pending {
-    border: solid red;
+    border: antiquewhite;
+    text-decoration: none;
 }
 
 .completed {
-    border: solid green;
+    border: antiquewhite;
+    text-decoration: line-through;
+}
+
+.btn {
+    border-radius: 40px;
+}
+
+img {
+    border-radius: 50%;
 }
 
 td {
